@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @org.example.mvc.annotation.Controller
-public class UserCreateController implements Controller {
-    @Override
+public class UserCreateController {
     @RequestMapping(value = "/user/form", method = RequestMethod.POST)
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         UserRepository.save(new User(request.getParameter("userId"), request.getParameter("name")));

@@ -36,7 +36,8 @@ public class DispatcherServlet extends HttpServlet {
         ahm.initialize();
 
         handlerMappings = List.of(ahm);
-        handlerAdapters = List.of(new SimpleControllerHandlerAdapter(), new AnnotationHandlerAdapter());
+        handlerAdapters = List.of(new AnnotationHandlerAdapter());
+        System.out.println(handlerMappings+ ", " +handlerAdapters);
         viewResolvers = Collections.singletonList(new JspViewResolver());
     }
 
@@ -45,6 +46,7 @@ public class DispatcherServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String requestURI = request.getRequestURI();
         RequestMethod requestMethod = RequestMethod.valueOf(request.getMethod());
+        System.out.println(requestURI + ", " + request.getMethod());
 
         Object handler = handlerMappings.stream()
                 .filter(hm -> hm.findHandler(new HandlerKey(requestURI, requestMethod)) != null)

@@ -23,15 +23,17 @@ public class AnnotationHandlerMapping implements HandlerMapping{
         Set<Class<?>> clazzesWithControllerAnnotation = reflections.getTypesAnnotatedWith(org.example.mvc.annotation.Controller.class, true);
         // 그 클래스마다
         clazzesWithControllerAnnotation.forEach(clazz ->
+        // 메소드마다
         Arrays.stream(clazz.getDeclaredMethods()).forEach(declaredMethod -> {
             // RequestMapping 어노테이션을 가져와서
             RequestMapping requestMappingAnnotation = declaredMethod.getDeclaredAnnotation(RequestMapping.class);
-            // RequestMethod 형식(GET,POST 등등)마다 foreach 하고
+            // RequestMethod 형식(GET,POST 등등)마다
             Arrays.stream(getRequestMethods(requestMappingAnnotation))
                 .forEach(requestMethod -> handlers.put(
                         // 핸들러키(맵)에다가 어노테이션의 value 값 및 해당 RequestMethod 형식을 저장
                         new HandlerKey(requestMappingAnnotation.value(), requestMethod), new AnnotationHandler(clazz, declaredMethod)
                 ));}));
+        System.out.println(handlers);
     }
 
     private RequestMethod[] getRequestMethods(RequestMapping requestMappingAnnotation) {
